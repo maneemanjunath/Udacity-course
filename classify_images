@@ -1,0 +1,32 @@
+from classifier import classifier 
+
+# TODO 3: Define classify_images function below, specifically replace the None
+#       below by the function definition of the classify_images function. 
+#       Notice that this function doesn't return anything because the 
+#       results_dic dictionary that is passed into the function is a mutable 
+#       data type so no return is needed.
+# 
+def classify_images(images_dir, results_dic, model):
+    
+    classified_list = ()
+      
+    
+    for filename, label in results_dic.items():
+        
+        path = images_dir+filename
+        classified_list = classifier(path,model)
+        classified_label = classified_list.lower().strip()
+        label = str(label)
+                                       
+        if label in classified_label:
+            
+            results_dic[filename].extend([classified_label])
+            results_dic[filename].append(1)
+        
+        else:
+            
+            results_dic[filename].extend([classified_label])
+            results_dic[filename].append(0)
+            
+        print(results_dic[filename])
+        
