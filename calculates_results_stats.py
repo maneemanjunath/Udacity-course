@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 # */AIPND-revision/intropyproject-classify-pet-images/calculates_results_stats.py
 #                                                                             
-# PROGRAMMER:
-# DATE CREATED:                                  
-# REVISED DATE: 
+# PROGRAMMER:Manasa Manjunath
+# DATE CREATED: 16.04.2022                                 
+# REVISED DATE: 18.04.2022
 # PURPOSE: Create a function calculates_results_stats that calculates the 
 #          statistics of the results of the programrun using the classifier's model 
 #          architecture to classify the images. This function will use the 
@@ -70,4 +70,50 @@ def calculates_results_stats(results_dic):
     """        
     # Replace None with the results_stats_dic dictionary that you created with 
     # this function 
-    return None
+    results_stats_dict = {'n_images':0, 'n_dogs_img':0, 'n_notdogs_img':0, 'n_match':0, 'n_correct_dogs':0, 'n_correct_notdogs':0, 'n_correct_breed':0, 'pct_correct_matches':0.0, 'pct_correct_dogs':0.0, 'pct_correctnot_dog':0.0, 'pct_correct_breed':0.0}
+    
+    image_filenames = results_dic.keys()
+    results_stats_dict['n_images'] = len(image_filenames)
+        
+    for filename in results_dic:
+        
+        
+        if (results_dic[filename][3] == 1): #no of dog images
+            
+            results_stats_dict['n_dogs_img'] += 1
+                        
+        else:
+            
+            results_stats_dict['n_notdogs_img'] += 1 #no of non-dog images
+            
+        if results_dic[filename][2] == 1: #label and classifier label matches
+            
+            results_stats_dict['n_match'] += 1
+                        
+        if results_dic[filename][4] == 1:
+            
+            results_stats_dict['n_correct_dogs'] += 1 #correct dog classification
+            
+        else:
+            
+            results_stats_dict['n_correct_notdogs'] += 1 #correct non-dog classification
+            
+        if results_dic[filename][3] == 1 and results_dic[filename][2] == 1:
+            
+            results_stats_dict['n_correct_breed'] += 1 #correct breed classification
+    
+    results_stats_dict['pct_correct_matches'] = 100 * (results_stats_dict['n_match']/results_stats_dict['n_images'])
+    if results_stats_dict['n_dogs_img'] > 0:
+        
+        results_stats_dict['pct_correct_dogs'] = 100 * (results_stats_dict['n_correct_dogs']/results_stats_dict['n_dogs_img'])
+    
+    if results_stats_dict['n_notdogs_img'] > 0:
+        
+        results_stats_dict['pct_correct_notdogs'] = 100 * (results_stats_dict['n_correct_notdogs']/results_stats_dict['n_notdogs_img'])
+   
+    if results_stats_dict['n_correct_dogs'] > 0:
+                          
+        results_stats_dict['pct_correct_breed'] = 100 * (results_stats_dict['n_correct_breed']/results_stats_dict['n_correct_dogs'])
+                          
+    print(results_stats_dict)
+    return results_stats_dict

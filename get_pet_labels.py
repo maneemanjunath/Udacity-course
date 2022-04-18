@@ -40,7 +40,7 @@ def get_pet_labels(image_dir):
       List. The list contains for following item:
          index 0 = pet image label (string)
     """
-    filename_list = listdir("pet_images/")
+    filename_list = listdir(image_dir)
     results_dict = {}
     
     for i in range(0,len(filename_list),1):

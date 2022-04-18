@@ -73,7 +73,7 @@ def classify_images(images_dir, results_dic, model):
         path = images_dir+filename
         classified_list = classifier(path,model)
         classified_label = classified_list.lower().strip()
-        label = str(label)
+        label = label[0]
                                        
         if label in classified_label:
             
@@ -85,7 +85,7 @@ def classify_images(images_dir, results_dic, model):
             results_dic[filename].extend([classified_label])
             results_dic[filename].append(0)
             
-        print(results_dic[filename])
+        #print(results_dic[filename])
         
         
       
